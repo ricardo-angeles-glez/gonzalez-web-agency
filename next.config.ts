@@ -3,13 +3,13 @@ const isProduction = process.env.NODE_ENV === 'production';
 const repositoryName = 'gonzalez-web-agency';
 
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  output: 'export',          // export estático
+  trailingSlash: true,       // URLs con slash final
+  basePath: isProduction ? `/${repositoryName}` : '',
+  assetPrefix: isProduction ? `/${repositoryName}/` : '',
   images: {
-    unoptimized: true
+    unoptimized: true,       // necesario para export
   },
-  basePath: isProduction ? `/gonzalez-web-agency/` : '',
-  assetPrefix: isProduction ? `/gonzalez-web-agency/` : '',
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
