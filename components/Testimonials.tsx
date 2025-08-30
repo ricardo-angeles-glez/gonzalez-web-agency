@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion'
+
 const testimonials = [
   {
     name: "María López",
@@ -16,15 +18,59 @@ const testimonials = [
   }
 ]
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2
+    }
+  }
+}
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut" as const
+    }
+  }
+}
+
 export default function Testimonials() {
   return (
     <section id="testimonials" className="section testimonials">
       <div className="container">
-        <h2 className="section-title text-center">Lo que dicen nuestros clientes</h2>
+        <motion.h2 
+          className="section-title text-center"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          Lo que dicen nuestros clientes
+        </motion.h2>
         
-        <div className="testimonials-grid">
+        <motion.div 
+          className="testimonials-grid"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
           {testimonials.map((testimonial, index) => (
-            <div key={index} className={`testimonial-card fade-in delay-${index % 3}`}>
+            <motion.div 
+              key={index} 
+              className="testimonial-card"
+              variants={itemVariants}
+              whileHover={{ 
+                y: -10, 
+                boxShadow: "0 15px 30px rgba(0, 0, 0, 0.1)" 
+              }}
+            >
               <div className="testimonial-header">
                 <div className="testimonial-avatar">{testimonial.name.charAt(0)}</div>
                 <div>
@@ -32,10 +78,10 @@ export default function Testimonials() {
                   <p className="testimonial-company">{testimonial.company}</p>
                 </div>
               </div>
-              <p className="testimonial-text">"{testimonial.text}"</p>
-            </div>
+              <p className="testimonial-text">&ldquo;{testimonial.text}&rdquo;</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   )
